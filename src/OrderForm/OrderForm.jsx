@@ -1,0 +1,94 @@
+import { useState, useEffect } from 'react';
+//            props {borderColor, borderSize}
+// borderColor={'aquamarine'} borderSize={10}
+
+const OrderForm = ({ borderColor, borderSize }) => {
+
+    const [counter, setCounter] = useState(0);
+    const [streetName, setStreetName] = useState('');
+    const [streetNumber, setStreetNumber] = useState(null);
+    const [finalFormData, setFinalFormData] = useState({});
+    const [isOrderComplete, setIsOrderComplete] = useState(false);
+
+    console.log(streetName)
+
+    // FE state often has a problem of Dirty, In-progress changes
+    // You don't need to capture every incremental step of the user's inputs
+    // you only want the final, confirmed state capture
+    // Dirty vs Pristine state
+    // IN-progress vs. Commit
+
+    useEffect(() => {
+        setFinalFormData({
+            counterValuer: counter,
+            streetNameValue: streetName,
+            streetNumberValue: streetNumber
+        })
+        console.log(JSON.stringify(finalFormData))
+    }, [streetName, streetNumber, counter]);
+
+
+    function additionButtonHandler() {
+        setCounter(counter + 1)
+    };
+
+    console.log('re-rendered', `value of street name is ${streetName}`)
+
+
+    function subtractionButtonHandler() {
+        setCounter(counter - 1)
+    };
+
+    function submissionHandler() {
+        setIsOrderComplete(!isOrderComplete)
+    }
+
+
+    // condition ? outcome : fallback
+    return (
+        <>
+            {isOrderComplete 
+                ?
+                <div>
+                    <h4>Order complete</h4>
+                    <p>You have ordered {counter} pieces of gold. Delivered to {streetNumber} {streetName} in 3 business days</p>
+                    <button onClick={() => setIsOrderComplete(!isOrderComplete)}>Order again</button>
+                </div>
+                :
+                <div style={{ border: `${borderSize}px solid ${borderColor}` }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
+                        {/* placeholder counter */}
+                        <div style={{ margin: 'auto' }}>{counter}</div>
+                        <button onClick={additionButtonHandler}>Add gold coin</button>
+                        <button onClick={subtractionButtonHandler}>Remove gold coin</button>
+                    </div>
+                    <h3>Delivery address:</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
+                        <div style={{ margin: 'auto' }}>{streetNumber}</div>
+                        <div style={{ margin: 'auto' }}>{streetName}</div>
+                        <input type="text" id='street-name' onChange={(e) => setStreetName(e.target.value)}></input>
+                        <input type="number" id='street-number' onChange={(e) => setStreetNumber(e.target.value)}></input>
+                    </div>
+                    <button onClick={submissionHandler}>Submit</button>
+                </div>}
+
+        </>
+    )
+}
+
+export default OrderForm;
+
+
+
+
+// React component lifecycle
+// mounting (initial call / showing / of your component)
+// lives - some user Inputs, handler run, other side effects
+// re-renders (this one is part of 'lives' stage)
+// components are re-rendered by React as a response
+// to certain triggers / events
+// re-render is a synonim to re-paint on screen, but not exactly
+// repaint - only visual changes
+// re-render - all the computations / function re-run
+// not all computations insde your component
+// are meant to be visual

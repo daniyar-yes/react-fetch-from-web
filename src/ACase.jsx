@@ -2,7 +2,7 @@ export default function ACase({aCaseMessageString = 'default', numberForA}) {
 
   // aCaseMessageString - just a string ''
   // numberForA - just a number
-  console.log({aCaseMessageString, numberForA})
+
   return (
     <div style={{fontStyle: 'italic'}}>
       {aCaseMessageString}
