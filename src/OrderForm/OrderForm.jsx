@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 //            props {borderColor, borderSize}
 // borderColor={'aquamarine'} borderSize={10}
 
-const OrderForm = ({ borderColor, borderSize }) => {
+const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter }) => {
 
     const [counter, setCounter] = useState(0);
     const [streetName, setStreetName] = useState('');
@@ -10,7 +10,7 @@ const OrderForm = ({ borderColor, borderSize }) => {
     const [finalFormData, setFinalFormData] = useState({});
     const [isOrderComplete, setIsOrderComplete] = useState(false);
 
-    const [orderCounter, setOrderCounter] = useState(0);
+
 
     console.log(streetName)
 
@@ -67,8 +67,6 @@ const OrderForm = ({ borderColor, borderSize }) => {
     // condition ? outcome : fallback
     return (
         <>
-
-            <div>Total Number of Orders: {orderCounter}</div>
             {isOrderComplete
                 ?
                 <div>
