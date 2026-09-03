@@ -10,6 +10,8 @@ const OrderForm = ({ borderColor, borderSize }) => {
     const [finalFormData, setFinalFormData] = useState({});
     const [isOrderComplete, setIsOrderComplete] = useState(false);
 
+    const [orderCounter, setOrderCounter] = useState(0);
+
     console.log(streetName)
 
     // FE state often has a problem of Dirty, In-progress changes
@@ -20,12 +22,30 @@ const OrderForm = ({ borderColor, borderSize }) => {
 
     useEffect(() => {
         setFinalFormData({
-            counterValuer: counter,
+            counterValue: counter,
             streetNameValue: streetName,
             streetNumberValue: streetNumber
         })
-        console.log(JSON.stringify(finalFormData))
+        console.log('from streetName useEffect', JSON.stringify(finalFormData))
     }, [streetName, streetNumber, counter]);
+
+    useEffect(() => {
+        if (isOrderComplete === true) {
+             setOrderCounter(orderCounter + 1);
+             return
+        }; // safeguard from resetting values when order is complete
+        // resetting the values that I need to reset
+
+        // but exclude the first render (mount)
+        if (orderCounter !== 0) {
+            setCounter(0);
+            setStreetName('');
+            setStreetNumber(null);
+        }
+
+        console.log('From isOrderComplete useEffect', JSON.stringify(finalFormData))
+
+    }, [isOrderComplete])
 
 
     function additionButtonHandler() {
@@ -47,7 +67,9 @@ const OrderForm = ({ borderColor, borderSize }) => {
     // condition ? outcome : fallback
     return (
         <>
-            {isOrderComplete 
+
+            <div>Total Number of Orders: {orderCounter}</div>
+            {isOrderComplete
                 ?
                 <div>
                     <h4>Order complete</h4>

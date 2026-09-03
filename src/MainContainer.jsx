@@ -7,7 +7,7 @@ function MainContainer() {
     return (
         <>
             <h4>Place your order:</h4>
-            <OrderForm />
+            <OrderForm borderSize={10} borderColor={'red'}/>
             {/* <OrderForm borderColor={'blue'} borderSize={10}/>
             <OrderForm borderColor={'yellow'} borderSize={20}/> */}
         </>
