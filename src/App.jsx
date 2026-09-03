@@ -1,13 +1,14 @@
 import MainContainer from "./MainContainer";
-import { StrictMode } from "react";
+import { StrictMode, useState } from "react";
 
 function App() {
 
-
+    const [orderCounter, setOrderCounter] = useState(0);
+    const [coinCounter, setCoinCounter] = useState(0);
   return (
     <>
       <StrictMode>
-        <MainContainer />
+        <MainContainer orderCounter={orderCounter} setOrderCounter={setOrderCounter} coinCounter={coinCounter} setCoinCounter={setCoinCounter} />
       </StrictMode>
     </>
   )

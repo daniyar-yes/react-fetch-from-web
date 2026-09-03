@@ -1,9 +1,12 @@
-import React from 'react'
 
-const ShoppingCart = ({orderCounter}) => {
-  return (
-    <div style={{display: 'flex', justifyContent: 'flex-end'}}>🛒 {orderCounter}</div>
-  )
+
+const ShoppingCart = ({ orderCounter, coinCounter }) => {
+    return (
+        <div style={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column' }}>
+            <div>🛒 {orderCounter}</div>
+            <div>🪙 {coinCounter}</div>
+        </div>
+    )
 }
 
 export default ShoppingCart

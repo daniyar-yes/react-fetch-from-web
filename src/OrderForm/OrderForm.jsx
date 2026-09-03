@@ -2,17 +2,13 @@ import { useState, useEffect } from 'react';
 //            props {borderColor, borderSize}
 // borderColor={'aquamarine'} borderSize={10}
 
-const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter }) => {
+const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coinCounter, setCoinCounter }) => {
 
     const [counter, setCounter] = useState(0);
     const [streetName, setStreetName] = useState('');
     const [streetNumber, setStreetNumber] = useState(null);
     const [finalFormData, setFinalFormData] = useState({});
     const [isOrderComplete, setIsOrderComplete] = useState(false);
-
-
-
-    console.log(streetName)
 
     // FE state often has a problem of Dirty, In-progress changes
     // You don't need to capture every incremental step of the user's inputs
@@ -32,6 +28,7 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter }) =
     useEffect(() => {
         if (isOrderComplete === true) {
              setOrderCounter(orderCounter + 1);
+             setCoinCounter(coinCounter + counter);
              return
         }; // safeguard from resetting values when order is complete
         // resetting the values that I need to reset
@@ -71,7 +68,7 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter }) =
                 ?
                 <div>
                     <h4>Order complete</h4>
-                    <p>You have ordered {counter} pieces of gold. Delivered to {streetNumber} {streetName} in 3 business days</p>
+                    <p>You have ordered {counter} pieces of silver. Delivered to {streetNumber} {streetName} in 3 business days</p>
                     <button onClick={() => setIsOrderComplete(!isOrderComplete)}>Order again</button>
                 </div>
                 :
@@ -79,8 +76,8 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter }) =
                     <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
                         {/* placeholder counter */}
                         <div style={{ margin: 'auto' }}>{counter}</div>
-                        <button onClick={additionButtonHandler}>Add gold coin</button>
-                        <button onClick={subtractionButtonHandler}>Remove gold coin</button>
+                        <button onClick={additionButtonHandler}>Add silver coin</button>
+                        <button onClick={subtractionButtonHandler}>Remove silver coin</button>
                     </div>
                     <h3>Delivery address:</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
