@@ -77,8 +77,8 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
                     <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
                         {/* placeholder counter */}
                         <div style={{ margin: 'auto' }}>{counter}</div>
-                        <button onClick={additionButtonHandler}>Add silver coin</button>
-                        <button onClick={subtractionButtonHandler}>Remove silver coin</button>
+                        <button onClick={additionButtonHandler}>Buy silver coin</button>
+                        <button onClick={subtractionButtonHandler}>Sell silver coin</button>
                     </div>
                     <h3>Delivery address:</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>

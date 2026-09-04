@@ -13,17 +13,14 @@ function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCoun
                 coinCounter={coinCounter}
             />
 
-            <SilverPriceChart silverData={silverData}/>
-
             <OrderForm
-                borderSize={10}
-                borderColor={'red'}
                 orderCounter={orderCounter}
                 setOrderCounter={setOrderCounter}
                 coinCounter={coinCounter}
                 setCoinCounter={setCoinCounter}
             />
 
+            <SilverPriceChart silverData={silverData}/>
         </>
     )
 }

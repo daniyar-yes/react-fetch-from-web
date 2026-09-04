@@ -2,6 +2,7 @@ import { axisBottom, axisLeft, extent, line, scaleLinear, scaleTime, select, zoo
 import { useEffect, useRef } from 'react';
 
 const SilverPriceChart = ({ silverData = {} }) => {
+
   const svgRef = useRef(null);
   const xAxisRef = useRef(null);
   const yAxisRef = useRef(null);
@@ -22,6 +23,14 @@ const SilverPriceChart = ({ silverData = {} }) => {
     }))
     .filter((point) => !Number.isNaN(point.date.getTime()) && Number.isFinite(point.price))
     .sort((firstPoint, secondPoint) => firstPoint.date - secondPoint.date);
+
+  const openingPrice = dataPoints[0]?.price;
+  const closingPrice = dataPoints.at(-1)?.price;
+  const recommendationMessage = dataPoints.length === 0 || openingPrice === closingPrice
+    ? silverData.CTANeutral
+    : openingPrice > closingPrice
+      ? silverData.CTAPositive
+      : silverData.CTANegative;
 
   const dateExtent = extent(dataPoints, (point) => point.date);
   const priceExtent = extent(dataPoints, (point) => point.price);
@@ -92,7 +101,7 @@ const SilverPriceChart = ({ silverData = {} }) => {
           <rect ref={zoomLayerRef} width={chartWidth} height={chartHeight} fill="transparent" />
         </g>
       </svg>
-      <p>{silverData.callToAction}</p>
+      <p>Recommendation: {recommendationMessage}</p>
     </div>
   )
 }
