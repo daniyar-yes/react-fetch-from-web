@@ -5,10 +5,19 @@ function App() {
 
     const [orderCounter, setOrderCounter] = useState(0);
     const [coinCounter, setCoinCounter] = useState(0);
+
+
+    const silverData = {
+      month: 'August',
+      dataPoints: [ {date: 1, price: 50}, {date: 3, price: 55}, {date: 5, price: 65}, {date: 8, price: 50}, {date: 10, price: 50}, {date: 15, price: 50}, {date: 18, price: 50}, {date: 22, price: 50}, {date: 25, price: 50}, {date: 28, price: 50},{date: 31, price: 50}],
+      callToAction: 'Sell now'
+    }
+
+    // dataPoints = [ {date: 'Jun 14th 2026', price: 50}, , , , , , , , , ,]
   return (
     <>
       <StrictMode>
-        <MainContainer orderCounter={orderCounter} setOrderCounter={setOrderCounter} coinCounter={coinCounter} setCoinCounter={setCoinCounter} />
+        <MainContainer orderCounter={orderCounter} setOrderCounter={setOrderCounter} coinCounter={coinCounter} setCoinCounter={setCoinCounter} silverData={silverData}/>
       </StrictMode>
     </>
   )

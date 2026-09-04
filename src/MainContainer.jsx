@@ -1,9 +1,10 @@
 // React component: is a JavaScript function, that takes exactly one input ('{props}') and returns 
 import OrderForm from "./OrderForm/OrderForm";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
+import SilverPriceChart from "./SilverPriceChart/SilverPriceChart";
 
 
-function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCounter }) {
+function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCounter, silverData }) {
 
     return (
         <>
@@ -11,7 +12,9 @@ function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCoun
                 orderCounter={orderCounter}
                 coinCounter={coinCounter}
             />
-            <h4>Place your order:</h4>
+
+            <SilverPriceChart silverData={silverData}/>
+
             <OrderForm
                 borderSize={10}
                 borderColor={'red'}
@@ -20,8 +23,7 @@ function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCoun
                 coinCounter={coinCounter}
                 setCoinCounter={setCoinCounter}
             />
-            {/* <OrderForm borderColor={'blue'} borderSize={10}/>
-            <OrderForm borderColor={'yellow'} borderSize={20}/> */}
+
         </>
     )
 }

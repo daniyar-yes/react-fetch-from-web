@@ -27,9 +27,9 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
 
     useEffect(() => {
         if (isOrderComplete === true) {
-             setOrderCounter(orderCounter + 1);
-             setCoinCounter(coinCounter + counter);
-             return
+            setOrderCounter(orderCounter + 1);
+            setCoinCounter(coinCounter + counter);
+            return
         }; // safeguard from resetting values when order is complete
         // resetting the values that I need to reset
 
@@ -63,7 +63,8 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
 
     // condition ? outcome : fallback
     return (
-        <>
+        <>            
+            <h4>Place your order:</h4>
             {isOrderComplete
                 ?
                 <div>
