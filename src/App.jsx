@@ -6,28 +6,6 @@ function App() {
   const [orderCounter, setOrderCounter] = useState(0);
   const [coinCounter, setCoinCounter] = useState(0);
 
-
-  const silverData = {
-    month: 'August',
-    dataPoints: [
-      { date: '2026-08-01T00:00:00Z', price: 52 },
-      { date: '2026-08-03T00:00:00Z', price: 55 },
-      { date: '2026-08-05T00:00:00Z', price: 58 },
-      { date: '2026-08-08T00:00:00Z', price: 60 },
-      { date: '2026-08-10T00:00:00Z', price: 62 },
-      { date: '2026-08-15T00:00:00Z', price: 52 },
-      { date: '2026-08-18T00:00:00Z', price: 45 },
-      { date: '2026-08-22T00:00:00Z', price: 30 },
-      { date: '2026-08-25T00:00:00Z', price: 20 },
-      { date: '2026-08-28T00:00:00Z', price: 22 },
-      { date: '2026-08-31T00:00:00Z', price: 52 }
-    ],
-    CTAPositive: 'Buy',
-    CTANeutral: 'Hold',
-    CTANegative: 'Sell',
-  }
-
-  // dataPoints = [ {date: 'Jun 14th 2026', price: 50}, , , , , , , , , ,]
   return (
     <>
       <StrictMode>
@@ -36,7 +14,6 @@ function App() {
           setOrderCounter={setOrderCounter}
           coinCounter={coinCounter}
           setCoinCounter={setCoinCounter}
-          silverData={silverData}
         />
       </StrictMode>
     </>

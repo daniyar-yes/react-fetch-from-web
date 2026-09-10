@@ -1,7 +1,40 @@
 import { axisBottom, axisLeft, extent, line, scaleLinear, scaleTime, select, zoom } from 'd3';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const SilverPriceChart = ({ silverData = {} }) => {
+const SilverPriceChart = () => {
+    const [silverData, setSilverData] = useState({
+        month: '',
+        dataPoints: [],
+        CTAPositive: '',
+        CTANegative: '',
+        CTANeutral: ''
+    });
+
+    useEffect(() => {
+        const fetchSilverData = async function() {
+            try {
+                // register your bin at https://jsonbin.io and get your own bin URL and master key
+                // put your own full bin URL
+                const binUrl = "https://api.jsonbin.io/v3/b/";
+                
+                const response = await fetch(binUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // put your own key
+                        'X-Master-Key': ''
+                    }
+                });
+
+                const data = await response.json();
+                setSilverData(data.record);
+            }
+            catch (error) {
+                console.error('Error fetching silver data:', error);
+            }
+        }
+        fetchSilverData();
+        }, []);
 
   const svgRef = useRef(null);
   const xAxisRef = useRef(null);

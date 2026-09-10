@@ -4,7 +4,7 @@ import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import SilverPriceChart from "./SilverPriceChart/SilverPriceChart";
 
 
-function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCounter, silverData }) {
+function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCounter }) {
 
     return (
         <>
@@ -20,7 +20,7 @@ function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCoun
                 setCoinCounter={setCoinCounter}
             />
 
-            <SilverPriceChart silverData={silverData}/>
+            <SilverPriceChart />
         </>
     )
 }
