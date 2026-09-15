@@ -2,7 +2,17 @@ import { useState, useEffect } from 'react';
 //            props {borderColor, borderSize}
 // borderColor={'aquamarine'} borderSize={10}
 
-const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coinCounter, setCoinCounter }) => {
+const OrderForm = (
+    {
+        borderColor,
+        borderSize,
+        orderCounter,
+        setOrderCounter,
+        coinCounter,
+        setCoinCounter,
+        addressHistory,
+        setAddressHistory
+    }) => {
 
     const [counter, setCounter] = useState(0);
     const [streetName, setStreetName] = useState('');
@@ -23,12 +33,20 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
             streetNumberValue: streetNumber
         })
         console.log('from streetName useEffect', JSON.stringify(finalFormData))
+
     }, [streetName, streetNumber, counter]);
 
     useEffect(() => {
         if (isOrderComplete === true) {
-            setOrderCounter(orderCounter + 1);
+            setOrderCounter(c => c + 1);
             setCoinCounter(coinCounter + counter);
+            setAddressHistory(prevAddressHistory => 
+                                [
+                                    ...prevAddressHistory,
+                                    { streetName: streetName, streetNumber: streetNumber, id: crypto.randomUUID() }
+                                ]
+                            )
+                            console.log('ADDRESS ARRAY',addressHistory)
             return
         }; // safeguard from resetting values when order is complete
         // resetting the values that I need to reset
@@ -39,6 +57,10 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
             setStreetName('');
             setStreetNumber(null);
         }
+
+        // setAddressHistory([{streetName: streetName, streetNumber: streetNumber}])
+
+        console.log('Address-DEBUG', addressHistory)
 
         console.log('From isOrderComplete useEffect', JSON.stringify(finalFormData))
 
@@ -59,11 +81,11 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
     function submissionHandler() {
         setIsOrderComplete(!isOrderComplete)
     }
-
-
+//  { streetName: streetName, streetNumber: streetNumber, id: crypto.randomUUID() }
+    const addressListItems = addressHistory.map(address => <li key={address.id}>{`${address.streetName} ${address.streetNumber}` }</li>);
     // condition ? outcome : fallback
     return (
-        <>            
+        <>
             <h4>Place your order:</h4>
             {isOrderComplete
                 ?
@@ -71,6 +93,9 @@ const OrderForm = ({ borderColor, borderSize, orderCounter, setOrderCounter, coi
                     <h4>Order complete</h4>
                     <p>You have ordered {counter} pieces of silver. Delivered to {streetNumber} {streetName} in 3 business days</p>
                     <button onClick={() => setIsOrderComplete(!isOrderComplete)}>Order again</button>
+
+                    <h6>Saved Address History:</h6>
+                    <ul>{addressHistory.length && addressListItems}</ul>
                 </div>
                 :
                 <div style={{ border: `${borderSize}px solid ${borderColor}` }}>

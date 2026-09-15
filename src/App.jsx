@@ -5,7 +5,9 @@ function App() {
 
   const [orderCounter, setOrderCounter] = useState(0);
   const [coinCounter, setCoinCounter] = useState(0);
-
+  const [addressHistory, setAddressHistory] = useState([]);
+  
+  console.log('APP ADDRESSES', addressHistory)
   return (
     <>
       <StrictMode>
@@ -14,6 +16,9 @@ function App() {
           setOrderCounter={setOrderCounter}
           coinCounter={coinCounter}
           setCoinCounter={setCoinCounter}
+          addressHistory={addressHistory}
+          setAddressHistory={setAddressHistory}
+
         />
       </StrictMode>
     </>

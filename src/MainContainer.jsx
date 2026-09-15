@@ -2,9 +2,18 @@
 import OrderForm from "./OrderForm/OrderForm";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import SilverPriceChart from "./SilverPriceChart/SilverPriceChart";
+import AddressInfo from "./AddressInfo/AddressInfo";
 
 
-function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCounter }) {
+function MainContainer(
+    {
+        orderCounter,
+        setOrderCounter,
+        coinCounter,
+        setCoinCounter,
+        addressHistory,
+        setAddressHistory
+    }) {
 
     return (
         <>
@@ -18,9 +27,13 @@ function MainContainer({ orderCounter, setOrderCounter, coinCounter, setCoinCoun
                 setOrderCounter={setOrderCounter}
                 coinCounter={coinCounter}
                 setCoinCounter={setCoinCounter}
+                addressHistory={addressHistory}
+                setAddressHistory={setAddressHistory}
             />
 
             <SilverPriceChart />
+
+            <AddressInfo addressHistory={addressHistory}/>
         </>
     )
 }

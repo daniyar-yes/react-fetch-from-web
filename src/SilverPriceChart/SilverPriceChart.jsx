@@ -14,15 +14,13 @@ const SilverPriceChart = () => {
         const fetchSilverData = async function() {
             try {
                 // register your bin at https://jsonbin.io and get your own bin URL and master key
-                // put your own full bin URL
                 const binUrl = "https://api.jsonbin.io/v3/b/";
                 
                 const response = await fetch(binUrl, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        // put your own key
-                        'X-Master-Key': ''
+                        'X-Access-Key': ''
                     }
                 });
 
