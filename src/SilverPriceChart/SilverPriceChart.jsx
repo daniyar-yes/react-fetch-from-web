@@ -1,38 +1,22 @@
 import { axisBottom, axisLeft, extent, line, scaleLinear, scaleTime, select, zoom } from 'd3';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useContext } from 'react';
+import { PriceContext } from '../PriceContext';
 
 const SilverPriceChart = () => {
-    const [silverData, setSilverData] = useState({
-        month: '',
-        dataPoints: [],
-        CTAPositive: '',
-        CTANegative: '',
-        CTANeutral: ''
-    });
+  const priceContextObject = useContext(PriceContext);
+  const silverData = priceContextObject?.silverData;    
+  
+  // const closingPrice = silverData?.dataPoints.at(-1)?.price;
 
-    useEffect(() => {
-        const fetchSilverData = async function() {
-            try {
-                // register your bin at https://jsonbin.io and get your own bin URL and master key
-                const binUrl = "https://api.jsonbin.io/v3/b/";
-                
-                const response = await fetch(binUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Access-Key': ''
-                    }
-                });
+    // const dataPoints = (Array.isArray(silverData.dataPoints) ? silverData.dataPoints : [])
+  //   .map((point) => ({
+  //     date: new Date(point.date),
+  //     price: Number(point.price)
+  //   }))
+  //   .filter((point) => !Number.isNaN(point.date.getTime()) && Number.isFinite(point.price))
+  //   .sort((firstPoint, secondPoint) => firstPoint.date - secondPoint.date);
 
-                const data = await response.json();
-                setSilverData(data.record);
-            }
-            catch (error) {
-                console.error('Error fetching silver data:', error);
-            }
-        }
-        fetchSilverData();
-        }, []);
+  const dataPoints = priceContextObject?.processedDataPoints;
 
   const svgRef = useRef(null);
   const xAxisRef = useRef(null);
@@ -46,22 +30,6 @@ const SilverPriceChart = () => {
   const margin = { top: 20, right: 24, bottom: 56, left: 64 };
   const chartWidth = width - margin.left - margin.right;
   const chartHeight = height - margin.top - margin.bottom;
-
-  const dataPoints = (Array.isArray(silverData.dataPoints) ? silverData.dataPoints : [])
-    .map((point) => ({
-      date: new Date(point.date),
-      price: Number(point.price)
-    }))
-    .filter((point) => !Number.isNaN(point.date.getTime()) && Number.isFinite(point.price))
-    .sort((firstPoint, secondPoint) => firstPoint.date - secondPoint.date);
-
-  const openingPrice = dataPoints[0]?.price;
-  const closingPrice = dataPoints.at(-1)?.price;
-  const recommendationMessage = dataPoints.length === 0 || openingPrice === closingPrice
-    ? silverData.CTANeutral
-    : openingPrice > closingPrice
-      ? silverData.CTAPositive
-      : silverData.CTANegative;
 
   const dateExtent = extent(dataPoints, (point) => point.date);
   const priceExtent = extent(dataPoints, (point) => point.price);
@@ -132,7 +100,7 @@ const SilverPriceChart = () => {
           <rect ref={zoomLayerRef} width={chartWidth} height={chartHeight} fill="transparent" />
         </g>
       </svg>
-      <p>Recommendation: {recommendationMessage}</p>
+     
     </div>
   )
 }

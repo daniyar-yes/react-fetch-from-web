@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react';
-//            props {borderColor, borderSize}
-// borderColor={'aquamarine'} borderSize={10}
+import { useState, useEffect, useContext } from 'react';
+import { PriceContext } from '../PriceContext';
 
 const OrderForm = (
     {
-        borderColor,
-        borderSize,
         orderCounter,
         setOrderCounter,
         coinCounter,
         setCoinCounter,
         addressHistory,
-        setAddressHistory
+        setAddressHistory,
+        setBudget,
+        budget
     }) => {
 
     const [counter, setCounter] = useState(0);
@@ -19,6 +18,8 @@ const OrderForm = (
     const [streetNumber, setStreetNumber] = useState(null);
     const [finalFormData, setFinalFormData] = useState({});
     const [isOrderComplete, setIsOrderComplete] = useState(false);
+
+    const price = useContext(PriceContext).currentPrice;
 
     // FE state often has a problem of Dirty, In-progress changes
     // You don't need to capture every incremental step of the user's inputs
@@ -45,8 +46,8 @@ const OrderForm = (
                                     ...prevAddressHistory,
                                     { streetName: streetName, streetNumber: streetNumber, id: crypto.randomUUID() }
                                 ]
-                            )
-                            console.log('ADDRESS ARRAY',addressHistory)
+                            );
+            setBudget(budget - price * counter);
             return
         }; // safeguard from resetting values when order is complete
         // resetting the values that I need to reset
@@ -98,7 +99,7 @@ const OrderForm = (
                     <ul>{addressHistory.length && addressListItems}</ul>
                 </div>
                 :
-                <div style={{ border: `${borderSize}px solid ${borderColor}` }}>
+                <div>
                     <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
                         {/* placeholder counter */}
                         <div style={{ margin: 'auto' }}>{counter}</div>

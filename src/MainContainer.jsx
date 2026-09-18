@@ -1,39 +1,34 @@
 // React component: is a JavaScript function, that takes exactly one input ('{props}') and returns 
-import OrderForm from "./OrderForm/OrderForm";
-import ShoppingCart from "./ShoppingCart/ShoppingCart";
-import SilverPriceChart from "./SilverPriceChart/SilverPriceChart";
-import AddressInfo from "./AddressInfo/AddressInfo";
+import AccountSummary from "./AccountSummary/AccountSummary";
+import { PriceContext } from "./PriceContext";
+import { useContext } from "react";
 
 
-function MainContainer(
-    {
-        orderCounter,
-        setOrderCounter,
-        coinCounter,
-        setCoinCounter,
-        addressHistory,
-        setAddressHistory
-    }) {
+function MainContainer({ orderCounter, coinCounter, budget }) {
 
+    const priceContextObj = useContext(PriceContext);
+    const silverData = priceContextObj?.silverData;
+    const processedDataPoints = priceContextObj?.processedDataPoints;
+    const openingPrice = priceContextObj.processedDataPoints[0]?.price;
+    const closingPrice = priceContextObj?.currentPrice;
+
+
+    const recommendationMessage = processedDataPoints.length === 0 || openingPrice === closingPrice
+        ? silverData.CTANeutral
+        : openingPrice > closingPrice
+            ? silverData.CTAPositive
+            : silverData.CTANegative;
     return (
         <>
-            <ShoppingCart
+            <AccountSummary
                 orderCounter={orderCounter}
                 coinCounter={coinCounter}
+                budget={budget}
             />
 
-            <OrderForm
-                orderCounter={orderCounter}
-                setOrderCounter={setOrderCounter}
-                coinCounter={coinCounter}
-                setCoinCounter={setCoinCounter}
-                addressHistory={addressHistory}
-                setAddressHistory={setAddressHistory}
-            />
-
-            <SilverPriceChart />
-
-            <AddressInfo addressHistory={addressHistory}/>
+            <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                <p>Recommendation: {recommendationMessage}</p>
+            </div>
         </>
     )
 }
